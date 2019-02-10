@@ -18,9 +18,12 @@ namespace DomainCentricDemo.Core.Services
             _empOps = empOps;
         }
 
-        public int Add(Employee emp)
+        public int Create(Employee emp)
         {
-            // Business rules here
+            // Business rules & validations here
+            if (string.IsNullOrEmpty(emp.Id) || string.IsNullOrEmpty(emp.Name))
+                return -1;
+
             if (emp.Address == "Ramallah" && emp.DepartmentId == "1")
             {
                 emp.Type = "Permenant";
@@ -30,23 +33,27 @@ namespace DomainCentricDemo.Core.Services
                 emp.Type = "Contract";
             }
 
+
             // To the operations
-            return _empOps.Create(emp);
+            var insertResult = _empOps.Insert(emp);
+
+            // Return the result
+            return insertResult;
+
         }
 
-        public Employee Get(string id)
+        public List<Employee> GetAll()
         {
 
             // To the operations
-            var emp = _empOps.Find(id);
+            var employees = _empOps.SelectAll();
 
 
             // Business rules here
-            if (emp.Name == "Secret")
-            {
-                return new Employee();
-            }
-            return emp;
+            employees.RemoveAll(r => r.Name == "Secret");
+
+            // Return the result
+            return employees;
         }
     }
 }

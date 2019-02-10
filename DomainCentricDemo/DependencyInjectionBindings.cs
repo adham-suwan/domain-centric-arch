@@ -1,7 +1,7 @@
 ﻿using DomainCentricDemo.Core.IOperations;
 using DomainCentricDemo.Core.IServices;
 using DomainCentricDemo.Core.Services;
-using DomainCentricDemo.Infrastructure.Implementations;
+using DomainCentricDemo.Infrastructure.Operations;
 using Ninject.Modules;
 using System;
 using System.Collections.Generic;

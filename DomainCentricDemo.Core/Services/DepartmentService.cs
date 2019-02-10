@@ -18,26 +18,31 @@ namespace DomainCentricDemo.Core.Services
             _depOps = depOps;
         }
 
-        public int Add(Department emp)
+        public int Create(Department dep)
         {
-            // Business rules here
-
+            // Business rules & validations here
+            if (string.IsNullOrEmpty(dep.Id) || string.IsNullOrEmpty(dep.Name))
+                return -1;
 
 
             // To the operations
-            return _depOps.Create(emp);
+            var insertResult = _depOps.Insert(dep);
+
+            // Return the result
+            return insertResult;
         }
 
-        public Department Get(string id)
+        public List<Department> GetAll()
         {
-
             // To the operations
-            var dep = _depOps.Find(id);
+            var departments = _depOps.SelectAll();
 
 
             // Business rules here
 
-            return dep;
+
+            // Return the result
+            return departments;
         }
     }
 }

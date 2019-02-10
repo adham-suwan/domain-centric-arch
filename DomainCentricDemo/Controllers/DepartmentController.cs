@@ -25,22 +25,73 @@ namespace DomainCentricDemo.Controllers
 
         }
 
-        public ActionResult Add()
+        public ActionResult Create()
         {
-            var addResult = _departmentService.Add(new Department { Name = "Marketing", Location = "2nd Floor" });
+            try
+            {
+                ViewBag.Message = TempData["CreationResponse"];
 
-            ViewBag.Message = $"Add Department Result: {addResult}";
+                return View();
+            }
+            catch (Exception ex)
+            {
 
-            return View();
+                _loggerService.Log(ex.Message, true);
+
+                TempData["ErrorMessage"] = "Error: " + ex.Message;
+
+                return RedirectToAction("Error", "Home");
+            }
         }
 
-        public ActionResult Get()
+        [HttpPost]
+        public ActionResult CreateNew(Department dep)
         {
-            var dep = _departmentService.Get("2");
+            try
+            {
+                var result = _departmentService.Create(dep);
 
-            ViewBag.Message = $"Get Department Name: {dep.Name} Location: {dep.Location}";
+                var resultText = result == 0 ? "Success" : "Failed";
 
-            return View();
+                TempData["CreationResponse"] = $"Creation Result: {resultText}";
+
+                return RedirectToAction("Create");
+            }
+            catch (Exception ex)
+            {
+
+                _loggerService.Log(ex.Message, true);
+
+                TempData["ErrorMessage"] = "Error: " + ex.Message;
+
+                return RedirectToAction("Error", "Home");
+            }
+        }
+
+        public ActionResult GetAll()
+        {
+            try
+            {
+                var departments = _departmentService.GetAll();
+
+                if (departments != null)
+                {
+                    ViewBag.Message = $"Total Departments: {departments.Count}";
+
+                    return View(departments);
+                }
+
+                ViewBag.Message = $"Error getting departments";
+                return RedirectToAction("Error", "Home");
+            }
+            catch (Exception ex)
+            {
+                _loggerService.Log(ex.Message, true);
+
+                TempData["ErrorMessage"] = "Error: " + ex.Message;
+
+                return RedirectToAction("Error", "Home");
+            }
         }
     }
 }

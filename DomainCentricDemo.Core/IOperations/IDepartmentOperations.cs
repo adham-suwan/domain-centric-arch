@@ -9,7 +9,7 @@ namespace DomainCentricDemo.Core.IOperations
 {
     public interface IDepartmentOperations
     {
-        int Create(Department dep);
-        Department Find(string id);
+        int Insert(Department dep);
+        List<Department> SelectAll();
     }
 }

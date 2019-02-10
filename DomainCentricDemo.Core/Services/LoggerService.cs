@@ -20,6 +20,8 @@ namespace DomainCentricDemo.Core.Services
 
         public void Log(string logText, bool isFile)
         {
+
+            // Add some logic
             if (isFile)
             {
                 _logOps.FileLog(logText);

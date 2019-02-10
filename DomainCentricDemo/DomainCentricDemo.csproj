@@ -170,11 +170,12 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Employee\Add.cshtml" />
-    <Content Include="Views\Department\Add.cshtml" />
+    <Content Include="Views\Employee\Create.cshtml" />
+    <Content Include="Views\Department\Create.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Department\Get.cshtml" />
-    <Content Include="Views\Employee\Get.cshtml" />
+    <Content Include="Views\Home\Error.cshtml" />
+    <Content Include="Views\Department\GetAll.cshtml" />
+    <Content Include="Views\Employee\GetAll.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

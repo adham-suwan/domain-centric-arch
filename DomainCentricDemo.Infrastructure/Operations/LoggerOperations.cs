@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DomainCentricDemo.Infrastructure.Implementations
+namespace DomainCentricDemo.Infrastructure.Operations
 {
     public class LoggerOperations : ILoggerOperations
     {

@@ -10,8 +10,8 @@ namespace DomainCentricDemo.Core.IOperations
 {
     public interface IEmployeeOperations
     {
-        int Create(Employee emp);
-        Employee Find(string id);
+        int Insert(Employee emp);
+        List<Employee> SelectAll();
 
     }
 }

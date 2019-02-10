@@ -9,7 +9,7 @@ namespace DomainCentricDemo.Core.IServices
 {
     public interface IDepartmentService
     {
-        int Add(Department dep);
-        Department Get(string id);
+        int Create(Department dep);
+        List<Department> GetAll();
     }
 }

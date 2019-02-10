@@ -17,6 +17,10 @@ namespace DomainCentricDemo.Controllers
             return View();
         }
 
-
+        public ActionResult Error()
+        {
+            ViewBag.Message = TempData["ErrorMessage"];
+            return View();
+        }
     }
 }

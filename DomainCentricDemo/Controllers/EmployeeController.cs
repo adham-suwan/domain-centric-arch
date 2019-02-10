@@ -25,22 +25,73 @@ namespace DomainCentricDemo.Controllers
 
         }
 
-        public ActionResult Add()
+        public ActionResult Create()
         {
-            var addResult = _employeeService.Add(new Employee { Name = "Ahmad", Address = "Ramallah", DepartmentId = "2" });
+            try
+            {
+                ViewBag.Message = TempData["CreationResponse"];
+                return View();
+            }
+            catch (Exception ex)
+            {
 
-            ViewBag.Message = $"Add Employee Result: {addResult}";
+                _loggerService.Log(ex.Message, true);
 
-            return View();
+                TempData["ErrorMessage"] = "Error: " + ex.Message;
+
+                return RedirectToAction("Error", "Home");
+
+            }
         }
 
-        public ActionResult Get()
+
+        public ActionResult CreateNew(Employee emp)
         {
-            var emp = _employeeService.Get("2");
+            try
+            {
+                var result = _employeeService.Create(emp);
 
-            ViewBag.Message = $"Get Employee Name: {emp.Name} Type: {emp.Type} Address: {emp.Address}";
+                var resultText = result == 0 ? "Success" : "Failed";
 
-            return View();
+                TempData["CreationResponse"] = $"Creation Result: {resultText}";
+
+                return RedirectToAction("Create");
+            }
+            catch (Exception ex)
+            {
+                _loggerService.Log(ex.Message, true);
+
+                TempData["ErrorMessage"] = "Error: " + ex.Message;
+
+                return RedirectToAction("Error", "Home");
+
+            }
+        }
+
+        public ActionResult GetAll()
+        {
+            try
+            {
+                var employees = _employeeService.GetAll();
+
+                if (employees != null)
+                {
+                    ViewBag.Message = $"Total Employees: {employees.Count}";
+
+                    return View(employees);
+                }
+
+                TempData["ErrorMessage"] = $"Error getting employees";
+                return RedirectToAction("Error", "Home");
+            }
+            catch (Exception ex)
+            {
+                _loggerService.Log(ex.Message, true);
+
+                TempData["ErrorMessage"] = "Error: " + ex.Message;
+
+                return RedirectToAction("Error", "Home");
+            }
         }
     }
 }

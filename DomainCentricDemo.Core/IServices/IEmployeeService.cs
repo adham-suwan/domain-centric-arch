@@ -9,8 +9,8 @@ namespace DomainCentricDemo.Core.IServices
 {
     public interface IEmployeeService
     {
-        int Add(Employee emp);
-        Employee Get(string id);
+        int Create(Employee emp);
+        List<Employee> GetAll();
 
     }
 }
