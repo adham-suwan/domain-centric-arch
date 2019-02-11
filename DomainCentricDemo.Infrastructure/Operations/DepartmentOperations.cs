@@ -8,17 +8,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static DomainCentricDemo.Core.Lookups;
 
 namespace DomainCentricDemo.Infrastructure.Operations
 {
     public class DepartmentOperations : IDepartmentOperations
     {
-        ILoggerService _logger;
+        ILoggerService _loggerService;
         DepartmentContext _departmentDbContext;
 
         public DepartmentOperations(ILoggerService logger)
         {
-            _logger = logger;
+            _loggerService = logger;
             _departmentDbContext = new DepartmentContext();
         }
 
@@ -38,7 +39,7 @@ namespace DomainCentricDemo.Infrastructure.Operations
 
 
                 // Some logs
-                _logger.Log($"Insert Department succeeded. ObjectId: {result.Id.ToString()}", true);
+                _loggerService.WriteLog($"Insert Department succeeded. ObjectId: {result.Id.ToString()}", LOG.Info);
 
 
                 // Return the execution result
@@ -46,7 +47,7 @@ namespace DomainCentricDemo.Infrastructure.Operations
             }
             catch (Exception ex)
             {
-                _logger.Log($"Insert Department failed. Exception: {ex.Message}", true);
+                _loggerService.WriteLog($"Insert Department failed. Exception: {ex.Message}", LOG.Fatal);
 
                 return -1;
             }
@@ -61,7 +62,7 @@ namespace DomainCentricDemo.Infrastructure.Operations
 
 
                 // Some logs
-                _logger.Log($"SelectAll Department succeeded. Total: {result.Count}", true);
+                _loggerService.WriteLog($"SelectAll Department succeeded. Total: {result.Count}", LOG.Info);
 
 
                 // Return the execution result
@@ -76,7 +77,7 @@ namespace DomainCentricDemo.Infrastructure.Operations
             catch (Exception ex)
             {
 
-                _logger.Log($"SelectAll Department failed. Exception: {ex.Message}", true);
+                _loggerService.WriteLog($"SelectAll Department failed. Exception: {ex.Message}", LOG.Fatal);
 
                 return null;
             }

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Reflection;
 using System.Web;
 using System.Web.Mvc;
+using static DomainCentricDemo.Core.Lookups;
 
 namespace DomainCentricDemo.Controllers
 {
@@ -29,13 +30,15 @@ namespace DomainCentricDemo.Controllers
         {
             try
             {
+                _loggerService.WriteLog("EmployeeController Create", LOG.Debug);
+
                 ViewBag.Message = TempData["CreationResponse"];
                 return View();
             }
             catch (Exception ex)
             {
 
-                _loggerService.Log(ex.Message, true);
+                _loggerService.WriteLog(ex.Message, LOG.Fatal);
 
                 TempData["ErrorMessage"] = "Error: " + ex.Message;
 
@@ -49,9 +52,13 @@ namespace DomainCentricDemo.Controllers
         {
             try
             {
+                _loggerService.WriteLog("EmployeeController CreateNew", LOG.Debug);
+
                 var result = _employeeService.Create(emp);
 
                 var resultText = result == 0 ? "Success" : "Failed";
+
+                _loggerService.WriteLog($"EmployeeController CreateNew result {resultText}", result == 0 ? LOG.Info : LOG.Error);
 
                 TempData["CreationResponse"] = $"Creation Result: {resultText}";
 
@@ -59,7 +66,7 @@ namespace DomainCentricDemo.Controllers
             }
             catch (Exception ex)
             {
-                _loggerService.Log(ex.Message, true);
+                _loggerService.WriteLog(ex.Message, LOG.Fatal);
 
                 TempData["ErrorMessage"] = "Error: " + ex.Message;
 
@@ -72,6 +79,8 @@ namespace DomainCentricDemo.Controllers
         {
             try
             {
+                _loggerService.WriteLog("EmployeeController GetAll", LOG.Debug);
+
                 var employees = _employeeService.GetAll();
 
                 if (employees != null)
@@ -81,12 +90,14 @@ namespace DomainCentricDemo.Controllers
                     return View(employees);
                 }
 
+                _loggerService.WriteLog("EmployeeController Error getting employees", LOG.Error);
+
                 TempData["ErrorMessage"] = $"Error getting employees";
                 return RedirectToAction("Error", "Home");
             }
             catch (Exception ex)
             {
-                _loggerService.Log(ex.Message, true);
+                _loggerService.WriteLog(ex.Message, LOG.Fatal);
 
                 TempData["ErrorMessage"] = "Error: " + ex.Message;
 

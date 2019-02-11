@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static DomainCentricDemo.Core.Lookups;
 
 namespace DomainCentricDemo.Core.Services
 {
@@ -18,19 +19,32 @@ namespace DomainCentricDemo.Core.Services
             _logOps = logOps;
         }
 
-        public void Log(string logText, bool isFile)
+
+        public void WriteLog(string logText, LOG type)
         {
-
             // Add some logic
-            if (isFile)
+            switch (type)
             {
-                _logOps.FileLog(logText);
+                case LOG.Debug:
+                    _logOps.Debug(logText);
+                    break;
+                case LOG.Warning:
+                    _logOps.Warning(logText);
+                    break;
+                case LOG.Info:
+                    _logOps.Info(logText);
+                    break;
+                case LOG.Error:
+                    _logOps.Error(logText);
+                    break;
+                case LOG.Fatal:
+                    _logOps.Fatal(logText);
+                    break;
+                default:
+                    _logOps.Debug(logText);
+                    break;
             }
-            else
-            {
-                _logOps.DbLog(logText);
 
-            }
         }
     }
 }

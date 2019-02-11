@@ -9,8 +9,10 @@ namespace DomainCentricDemo.Core.IOperations
 {
     public interface ILoggerOperations
     {
-        void DbLog(string logText);
-        void FileLog(string logText);
-
+        void Debug(string text);
+        void Info(string text);
+        void Error(string text);
+        void Fatal(string text);
+        void Warning(string text);
     }
 }

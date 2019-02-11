@@ -47,6 +47,7 @@
     <Compile Include="IServices\IDepartmentService.cs" />
     <Compile Include="IOperations\IEmployeeOperations.cs" />
     <Compile Include="IServices\IEmployeeService.cs" />
+    <Compile Include="Lookups.cs" />
     <Compile Include="Models\Department.cs" />
     <Compile Include="Models\Employee.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

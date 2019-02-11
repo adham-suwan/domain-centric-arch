@@ -11,14 +11,35 @@ namespace DomainCentricDemo.Infrastructure.Operations
 {
     public class LoggerOperations : ILoggerOperations
     {
-        public void DbLog(string logText)
+        public static log4net.ILog logger;
+
+        public LoggerOperations()
         {
-            System.Diagnostics.Debug.WriteLine($"Log: {logText} to Database");
+            logger = log4net.LogManager.GetLogger("DomainCentricDemoLogger");
+            log4net.Config.XmlConfigurator.Configure();
         }
 
-        public void FileLog(string logText)
+
+        public void Debug(string text)
         {
-            System.Diagnostics.Debug.WriteLine($"Log: {logText} to File");
+            logger.Debug(text);
+        }
+
+        public void Info(string text)
+        {
+            logger.Info(text);
+        }
+        public void Error(string text)
+        {
+            logger.Error(text);
+        }
+        public void Fatal(string text)
+        {
+            logger.Fatal(text);
+        }
+        public void Warning(string text)
+        {
+            logger.Warn(text);
         }
     }
 }

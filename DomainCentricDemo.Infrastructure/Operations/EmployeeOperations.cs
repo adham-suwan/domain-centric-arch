@@ -8,18 +8,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static DomainCentricDemo.Core.Lookups;
 
 namespace DomainCentricDemo.Infrastructure.Operations
 {
     public class EmployeeOperations : IEmployeeOperations
     {
-        ILoggerService _logger;
+        ILoggerService _loggerService;
         EmployeeContext _employeeDbContext;
 
 
         public EmployeeOperations(ILoggerService logger)
         {
-            _logger = logger;
+            _loggerService = logger;
             _employeeDbContext = new EmployeeContext();
 
         }
@@ -42,7 +43,7 @@ namespace DomainCentricDemo.Infrastructure.Operations
 
 
                 // Some logs
-                _logger.Log($"Insert Employee succeeded. ObjectId: {result.Id.ToString()}", false);
+                _loggerService.WriteLog($"Insert Employee succeeded. ObjectId: {result.Id.ToString()}", LOG.Info);
 
 
                 // Return the execution result
@@ -50,7 +51,7 @@ namespace DomainCentricDemo.Infrastructure.Operations
             }
             catch (Exception ex)
             {
-                _logger.Log($"Insert Employee failed. Exception: {ex.Message}", false);
+                _loggerService.WriteLog($"Insert Employee failed. Exception: {ex.Message}", LOG.Fatal);
 
                 return -1;
             }
@@ -65,7 +66,7 @@ namespace DomainCentricDemo.Infrastructure.Operations
 
 
                 // Some logs
-                _logger.Log($"SelectAll Employee succeeded. Total: {result.Count}", false);
+                _loggerService.WriteLog($"SelectAll Employee succeeded. Total: {result.Count}", LOG.Info);
 
 
                 // Return the execution result
@@ -82,7 +83,7 @@ namespace DomainCentricDemo.Infrastructure.Operations
             catch (Exception ex)
             {
 
-                _logger.Log($"SelectAll Employee failed. Exception: {ex.Message}", false);
+                _loggerService.WriteLog($"SelectAll Employee failed. Exception: {ex.Message}", LOG.Fatal);
 
                 return null;
             }

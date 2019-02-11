@@ -7,6 +7,7 @@ using System.Linq;
 using System.Reflection;
 using System.Web;
 using System.Web.Mvc;
+using static DomainCentricDemo.Core.Lookups;
 
 namespace DomainCentricDemo.Controllers
 {
@@ -29,6 +30,8 @@ namespace DomainCentricDemo.Controllers
         {
             try
             {
+                _loggerService.WriteLog("DepartmentController Create", LOG.Debug);
+
                 ViewBag.Message = TempData["CreationResponse"];
 
                 return View();
@@ -36,7 +39,7 @@ namespace DomainCentricDemo.Controllers
             catch (Exception ex)
             {
 
-                _loggerService.Log(ex.Message, true);
+                _loggerService.WriteLog(ex.Message, LOG.Fatal);
 
                 TempData["ErrorMessage"] = "Error: " + ex.Message;
 
@@ -49,9 +52,14 @@ namespace DomainCentricDemo.Controllers
         {
             try
             {
+                _loggerService.WriteLog("DepartmentController CreateNew", LOG.Debug);
+
                 var result = _departmentService.Create(dep);
 
                 var resultText = result == 0 ? "Success" : "Failed";
+
+                _loggerService.WriteLog($"EmployeeController CreateNew result {resultText}", result == 0 ? LOG.Info : LOG.Error);
+
 
                 TempData["CreationResponse"] = $"Creation Result: {resultText}";
 
@@ -60,7 +68,7 @@ namespace DomainCentricDemo.Controllers
             catch (Exception ex)
             {
 
-                _loggerService.Log(ex.Message, true);
+                _loggerService.WriteLog(ex.Message, LOG.Fatal);
 
                 TempData["ErrorMessage"] = "Error: " + ex.Message;
 
@@ -72,6 +80,8 @@ namespace DomainCentricDemo.Controllers
         {
             try
             {
+                _loggerService.WriteLog("DepartmentController GetAll", LOG.Debug);
+
                 var departments = _departmentService.GetAll();
 
                 if (departments != null)
@@ -86,7 +96,7 @@ namespace DomainCentricDemo.Controllers
             }
             catch (Exception ex)
             {
-                _loggerService.Log(ex.Message, true);
+                _loggerService.WriteLog(ex.Message, LOG.Fatal);
 
                 TempData["ErrorMessage"] = "Error: " + ex.Message;
 
